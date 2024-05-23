@@ -140,7 +140,9 @@
 
         // Fonction pour supprimer une ligne
         function deleteRow(row) {
-            row.remove();
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette ligne?")) {
+                row.remove();
+            }
         }
 
         // Gestion des clics sur les boutons Éditer et Supprimer

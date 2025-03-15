@@ -95,24 +95,7 @@ th {
 .custom-file-label:hover {
     background-color: #0056b3;
 }
-.toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-size: 14px;
-    z-index: 1000;
-}
 
-.toast.success {
-    background-color: #28a745;
-}
-
-.toast.error {
-    background-color: #dc3545;
-}
 .editButton {
     background-color: #3b82f6; /* Couleur bleue */
     color: white;
@@ -136,4 +119,43 @@ th {
 
 .deleteButton:hover {
     background-color: #dc2626; /* Couleur rouge plus foncée */
+}
+/* Styles pour la popup */
+#messagePopup {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* S'assurer que la popup est au-dessus de tout */
+}
+
+#messagePopup div {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#popupMessage {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+#closeMessagePopup {
+    background: #3b82f6; /* Couleur bleue */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#closeMessagePopup:hover {
+    background: #2563eb; /* Couleur bleue plus foncée */
 }

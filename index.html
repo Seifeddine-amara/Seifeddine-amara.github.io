@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 </head>
+
 <body class="bg-gray-100 font-sans">
     <header class="bg-blue-600 text-white py-4 shadow-lg">
         <div class="container mx-auto px-4">
@@ -17,29 +19,42 @@
         </div>
     </header>
 
+    <!-- Message Popup -->
+    <div id="messagePopup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-96 text-center">
+            <h2 id="popupMessage" class="text-xl font-bold mb-4"></h2>
+            <button id="closeMessagePopup"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Fermer
+            </button>
+        </div>
+    </div>
+
     <div class="container mx-auto px-4 py-8">
         <!-- Logo -->
         <img src="logo.jpg" alt="Mondo Shop Logo" class="mx-auto mb-8 w-32 h-32 rounded-full shadow-lg">
 
         <!-- Search Bar -->
         <div class="mb-8">
-            <input
-                type="text"
-                id="searchBar"
-                placeholder="Rechercher un produit..."
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+            <input type="text" id="searchBar" placeholder="Rechercher un produit..."
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
         <!-- Form -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-8">
             <form id="shopForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <input type="text" name="Produit" placeholder="Produit" class="p-2 border border-gray-300 rounded-lg" required>
-                <input type="text" name="Nom" placeholder="Nom & Prénom" class="p-2 border border-gray-300 rounded-lg" required>
-                <input type="tel" name="num_tel" placeholder="Téléphone" class="p-2 border border-gray-300 rounded-lg" required>
-                <input type="text" name="adresse" placeholder="Adresse" class="p-2 border border-gray-300 rounded-lg" required>
-                <input type="number" name="quantité" placeholder="Quantité" class="p-2 border border-gray-300 rounded-lg" required>
-                <input type="number" name="prix" placeholder="Prix" class="p-2 border border-gray-300 rounded-lg" required>
+                <input type="text" name="Produit" placeholder="Produit" class="p-2 border border-gray-300 rounded-lg"
+                    required>
+                <input type="text" name="Nom" placeholder="Nom & Prénom" class="p-2 border border-gray-300 rounded-lg"
+                    required>
+                <input type="tel" name="num_tel" placeholder="Téléphone" class="p-2 border border-gray-300 rounded-lg"
+                    required>
+                <input type="text" name="adresse" placeholder="Adresse" class="p-2 border border-gray-300 rounded-lg"
+                    required>
+                <input type="number" name="quantité" placeholder="Quantité"
+                    class="p-2 border border-gray-300 rounded-lg" required>
+                <input type="number" name="prix" placeholder="Prix" class="p-2 border border-gray-300 rounded-lg"
+                    required>
                 <div class="flex items-center space-x-4">
                     <label class="flex items-center">
                         <input type="radio" name="etat" value="Accepté" class="form-radio text-blue-500" required>
@@ -58,29 +73,33 @@
 
         <!-- Table -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <table id="resultTable" class="w-full">
-                <thead class="bg-blue-600 text-white">
-                    <tr>
-                        <th class="p-3">Produit</th>
-                        <th class="p-3">Nom & Prénom</th>
-                        <th class="p-3">Téléphone</th>
-                        <th class="p-3">Adresse</th>
-                        <th class="p-3">Quantité</th>
-                        <th class="p-3">Prix</th>
-                        <th class="p-3">État</th>
-                        <th class="p-3">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200"></tbody>
-            </table>
+            <div class="overflow-x-auto"> <!-- Ajoutez cette div -->
+                <table id="resultTable" class="w-full">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="p-3">Produit</th>
+                            <th class="p-3">Nom & Prénom</th>
+                            <th class="p-3">Téléphone</th>
+                            <th class="p-3">Adresse</th>
+                            <th class="p-3">Quantité</th>
+                            <th class="p-3">Prix</th>
+                            <th class="p-3">État</th>
+                            <th class="p-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Actions -->
         <div class="mt-8 flex justify-end space-x-4">
-            <button id="exportButton" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+            <button id="exportButton"
+                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
                 <i class="fas fa-file-export"></i> Exporter
             </button>
-            <button id="openImportPopup" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+            <button id="openImportPopup"
+                class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
                 <i class="fas fa-file-import"></i> Importer
             </button>
         </div>
@@ -96,9 +115,11 @@
                 </button>
             </div>
             <div class="mb-4">
-                <input type="file" id="importFile" accept=".xlsx, .xls" class="w-full p-2 border border-gray-300 rounded-lg">
+                <input type="file" id="importFile" accept=".xlsx, .xls"
+                    class="w-full p-2 border border-gray-300 rounded-lg">
             </div>
-            <button id="importButton" class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors">
+            <button id="importButton"
+                class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors">
                 Importer
             </button>
         </div>
@@ -113,4 +134,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

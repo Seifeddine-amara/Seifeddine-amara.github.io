@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isPhoneNumberUnique(phoneNumber)) {
       addRowToTable(formData);
       shopForm.reset();
-      showToast("Données ajoutées avec succès !", true);
+      showPopup("Données ajoutées avec succès !", true);
     } else {
-      showToast("Le numéro de téléphone existe déjà.", false);
+      showPopup("Le numéro de téléphone existe déjà.", false);
     }
   });
 
@@ -30,36 +30,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const addRowToTable = (formData) => {
     const newRow = resultTable.insertRow();
     const cells = [
-        formData.get('Produit'),
-        formData.get('Nom'),
-        formData.get('num_tel'),
-        formData.get('adresse'),
-        formData.get('quantité'),
-        formData.get('prix'),
-        formData.get('etat')
+      formData.get("Produit"),
+      formData.get("Nom"),
+      formData.get("num_tel"),
+      formData.get("adresse"),
+      formData.get("quantité"),
+      formData.get("prix"),
+      formData.get("etat"),
     ];
 
     cells.forEach((cellData, index) => {
-        const newCell = newRow.insertCell(index);
-        newCell.textContent = cellData;
+      const newCell = newRow.insertCell(index);
+      newCell.textContent = cellData;
     });
 
     const actionCell = newRow.insertCell(cells.length);
 
     // Créer le bouton "Éditer"
-    const editButton = document.createElement('button');
+    const editButton = document.createElement("button");
     editButton.innerHTML = '<i class="fas fa-edit"></i> Modifier';
-    editButton.className = 'editButton bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-600 transition-colors mr-2';
+    editButton.className =
+      "editButton bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-600 transition-colors mr-2";
 
     // Créer le bouton "Supprimer"
-    const deleteButton = document.createElement('button');
+    const deleteButton = document.createElement("button");
     deleteButton.innerHTML = '<i class="fas fa-trash"></i> Supprimer';
-    deleteButton.className = 'deleteButton bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition-colors';
+    deleteButton.className =
+      "deleteButton bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition-colors";
 
     // Ajouter les boutons à la cellule d'action
     actionCell.appendChild(editButton);
     actionCell.appendChild(deleteButton);
-};
+  };
 
   // Vérifier si le numéro de téléphone est unique
   const isPhoneNumberUnique = (phoneNumber) => {
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (target.classList.contains("deleteButton")) {
       const row = target.closest("tr");
       row.remove();
-      showToast("Ligne supprimée avec succès !", true);
+      showPopup("Ligne supprimée avec succès !", true);
     }
 
     // Modifier une ligne
@@ -106,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Supprimer la ligne après l'avoir modifiée
     row.remove();
-    showToast("Ligne prête à être modifiée !", true);
+    showPopup("Ligne prête à être modifiée !", true);
   };
 
   // Exporter les données vers Excel
@@ -142,14 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
         10
       )}_${currentDate.getHours()}-${currentDate.getMinutes()}.xlsx`;
     XLSX.writeFile(workbook, filename);
-    showToast("Données exportées avec succès !", true);
+    showPopup("Données exportées avec succès !", true);
   });
 
   // Importer des données depuis Excel
   importButton.addEventListener("click", () => {
     const file = importFile.files[0];
     if (!file) {
-      showToast("Veuillez sélectionner un fichier Excel.", false);
+      showPopup("Veuillez sélectionner un fichier Excel.", false);
       return;
     }
 
@@ -180,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 `;
       });
 
-      showToast("Données importées avec succès !", true);
+      showPopup("Données importées avec succès !", true);
       importFile.value = "";
       importPopup.style.display = "none";
     };
@@ -197,14 +199,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Afficher un toast (message de feedback)
-  const showToast = (message, isSuccess) => {
-    const toast = document.createElement("div");
-    toast.className = `toast ${isSuccess ? "success" : "error"}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
+  const messagePopup = document.getElementById("messagePopup");
+  const popupMessage = document.getElementById("popupMessage");
+  const closeMessagePopup = document.getElementById("closeMessagePopup");
 
-    setTimeout(() => {
-      toast.remove();
-    }, 3000);
+  // Afficher la popup avec un message
+  const showPopup = (message, isSuccess) => {
+    popupMessage.textContent = message;
+    if (isSuccess) {
+      popupMessage.classList.remove("text-red-600");
+      popupMessage.classList.add("text-green-600");
+    } else {
+      popupMessage.classList.remove("text-green-600");
+      popupMessage.classList.add("text-red-600");
+    }
+    messagePopup.style.display = "flex";
   };
+
+  // Fermer la popup
+  closeMessagePopup.addEventListener("click", () => {
+    messagePopup.style.display = "none";
+  });
 });

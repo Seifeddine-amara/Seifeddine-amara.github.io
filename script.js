@@ -240,3 +240,36 @@ document.addEventListener("DOMContentLoaded", () => {
     messagePopup.style.display = "none";
   });
 });
+const searchBar = document.getElementById("searchBar");
+
+searchBar.addEventListener("input", () => {
+    const searchTerm = searchBar.value.toLowerCase();
+    filterTable(searchTerm);
+});
+
+const filterTable = (searchTerm) => {
+    const rows = resultTable.getElementsByTagName("tr");
+
+    for (const row of rows) {
+        const cells = row.getElementsByTagName("td");
+        let shouldDisplay = false;
+
+        for (let i = 0; i < cells.length - 1; i++) {
+            const cellText = cells[i].textContent.toLowerCase();
+            if (cellText.includes(searchTerm)) {
+                shouldDisplay = true;
+                break;
+            }
+        }
+
+        row.style.display = shouldDisplay ? "" : "none";
+    }
+};
+
+// Optionnel : Fonction pour normaliser le texte (ignorer les accents)
+const normalizeText = (text) => {
+    return text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+};

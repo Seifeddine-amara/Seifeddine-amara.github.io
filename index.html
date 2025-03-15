@@ -132,6 +132,23 @@
         </div>
     </div>
 
+    <!-- Confirmation Popup -->
+    <div id="confirmDeletePopup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-96 text-center">
+            <h2 class="text-xl font-bold mb-4">Confirmer la suppression</h2>
+            <p class="mb-4">Êtes-vous sûr de vouloir supprimer cette ligne ?</p>
+            <div class="flex justify-center space-x-4">
+                <button id="confirmDeleteButton"
+                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                    Oui, supprimer
+                </button>
+                <button id="cancelDeleteButton"
+                    class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                    Annuler
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 

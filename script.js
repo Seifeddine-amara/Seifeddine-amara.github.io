@@ -76,14 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Gérer les clics sur les boutons "Supprimer" et "Modifier"
+  const confirmDeletePopup = document.getElementById("confirmDeletePopup");
+  const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+  const cancelDeleteButton = document.getElementById("cancelDeleteButton");
+  let rowToDelete = null; // Pour stocker la ligne à supprimer
   resultTable.addEventListener("click", (event) => {
     const target = event.target;
 
     // Supprimer une ligne
     if (target.classList.contains("deleteButton")) {
-      const row = target.closest("tr");
-      row.remove();
-      showPopup("Ligne supprimée avec succès !", true);
+      rowToDelete = target.closest("tr"); // Stocker la ligne à supprimer
+      confirmDeletePopup.style.display = "flex"; // Afficher la popup de confirmation
     }
 
     // Modifier une ligne
@@ -91,6 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = target.closest("tr");
       editRow(row);
     }
+  });
+
+  // Confirmer la suppression
+  confirmDeleteButton.addEventListener("click", () => {
+    if (rowToDelete) {
+      rowToDelete.remove(); // Supprimer la ligne
+      showPopup("Ligne supprimée avec succès !", true); // Afficher un message de succès
+    }
+    confirmDeletePopup.style.display = "none"; // Masquer la popup
+    rowToDelete = null; // Réinitialiser la variable
+  });
+
+  // Annuler la suppression
+  cancelDeleteButton.addEventListener("click", () => {
+    confirmDeletePopup.style.display = "none"; // Masquer la popup
+    rowToDelete = null; // Réinitialiser la variable
   });
 
   // Modifier une ligne

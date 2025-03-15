@@ -95,3 +95,45 @@ th {
 .custom-file-label:hover {
     background-color: #0056b3;
 }
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+.editButton {
+    background-color: #3b82f6; /* Couleur bleue */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.editButton:hover {
+    background-color: #2563eb; /* Couleur bleue plus foncée */
+}
+
+.deleteButton {
+    background-color: #ef4444; /* Couleur rouge */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626; /* Couleur rouge plus foncée */
+}
